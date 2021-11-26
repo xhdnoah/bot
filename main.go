@@ -2,6 +2,7 @@ package main
 
 import (
 	"go-chat/handler"
+	"go-chat/middleware"
 	"go-chat/model"
 	"go-chat/router"
 	"log"
@@ -88,6 +89,7 @@ func main() {
 	}()
 	defer server.Close()
 
+	g.Use(middleware.Cors("http://localhost:1234"))
 	g.GET("/socket.io/*any", gin.WrapH(server))
 	g.POST("/socket.io/*any", gin.WrapH(server))
 
